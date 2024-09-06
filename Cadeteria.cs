@@ -21,8 +21,7 @@ public class Cadeteria{
     public void ListarCadetes(){
         foreach (var cadete in listaDeCadetes)
         {
-        //    cadete.infoCadete();
-        //    System.Console.WriteLine("\n");
+            System.Console.WriteLine(cadete.infoCadete() + "\n");
         }
     }
 }

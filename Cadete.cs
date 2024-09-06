@@ -3,8 +3,7 @@ public class Cadete{
     private string nombre;
     private string direccion;
     private int telefono;
-    private List<Pedido> listaPedidosPendientes;
-    private List<Pedido> ListaPedidosEntregados;
+    private List<Pedido> listaPedidos;
 
     public Cadete(int id, string nombre, string direccion, int telefono)
     {
@@ -18,11 +17,75 @@ public class Cadete{
     public string Nombre { get => nombre; set => nombre = value; }
     public string Direccion { get => direccion; set => direccion = value; }
     public int Telefono { get => telefono; set => telefono = value; }
-    public List<Pedido> ListaPedidosPendientes { get => listaPedidosPendientes; set => listaPedidosPendientes = value; }
-    public List<Pedido> ListaPedidosEntregados1 { get => ListaPedidosEntregados; set => ListaPedidosEntregados = value; }
+    public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
     public void JornalACobrar(){
-        float jornal = ListaPedidosEntregados.Count() * 500;
-        System.Console.WriteLine($"El jornal de el cadete {Nombre} es {jornal} y entrego {ListaPedidosEntregados.Count()}");
+        int cantEntregados = CantidadEntregados();
+        float jornal = cantEntregados * 500;
+        System.Console.WriteLine($"El jornal de el cadete {Nombre} es {jornal} y entrego {cantEntregados}");
     }
+
+    public string infoCadete(){
+        return
+            "Id: " + Id +
+            "Nombre: " + Nombre +
+            "Direccion: " + Direccion +
+            "telefono: " + Telefono +
+            "cantidad de Pedidos pendientes: " + ListaPedidos.Count() +
+            "Cantidad de pedidos entregados: " + CantidadEntregados()
+        ;
+    }
+
+    public void EntregarPedido(int id){
+        foreach (var pedido in ListaPedidos)
+        {
+            if(pedido.NroPedido == id){
+                pedido.Estado = "Entregado";
+                break;
+            }
+        }
+    }
+
+    public int CantidadEntregados(){
+        int i=0;
+        foreach (var pedido in ListaPedidos)
+        {
+            if (pedido.Estado == "Entregado")
+            {
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public void EliminarPedido(int id){
+        foreach (var pedido in ListaPedidos)
+        {
+            if(pedido.NroPedido == id){
+                ListaPedidos.Remove(pedido);
+                break;
+            }
+        }
+    }
+
+    public void AgregarPedido(Pedido pedido){
+        ListaPedidos.Add(pedido);
+    }
+
+    public int CantPedidosPendientes(){
+        int i=0;
+        foreach (var pedido in ListaPedidos)
+        {
+            if (pedido.Estado == "Pendiente")
+            {
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public int CantPedidosTotal(){
+        return ListaPedidos.Count();
+    }
+
 }
