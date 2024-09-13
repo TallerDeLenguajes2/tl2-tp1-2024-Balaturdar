@@ -88,4 +88,21 @@ public class Cadete{
         return ListaPedidos.Count();
     }
 
+    public void listarPedidos(){
+        foreach (var pedido in ListaPedidos)
+        {
+            Console.WriteLine(pedido.InfoPedido());
+        }
+    }
+
+    public Pedido BuscarPedido(int id){
+        foreach (var pedido in listaPedidos)
+        {
+            if(pedido.NroPedido == id){
+                return pedido;
+            }
+        }
+        return null;
+    }
+
 }

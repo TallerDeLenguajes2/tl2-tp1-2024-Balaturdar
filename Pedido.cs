@@ -4,12 +4,12 @@ public class Pedido{
     private Cliente cliente;
     private string estado;
 
-    public Pedido(int nroPedido, string obs, Cliente cliente, string estado)
+    public Pedido(int nroPedido, string obs, Cliente cliente)
     {
         NroPedido = nroPedido;
         Obs = obs;
         Cliente = cliente;
-        Estado = estado;
+        Estado = "Pendiente";
     }
 
     public int NroPedido { get => nroPedido; set => nroPedido = value; }
@@ -21,7 +21,9 @@ public class Pedido{
         return
             "Nro Pedido: " + NroPedido +
             "Observacion: " + Obs +
-            "Cliente: " +Cliente.Nombre+
+            "Cliente: " + Cliente.Nombre +
+            "direccion" + Cliente.Direccion +
+            "Referecia Direccion: " + Cliente.RefDireccion +
             "Estado: " + Estado;
     }
 
