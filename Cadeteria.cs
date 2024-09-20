@@ -125,4 +125,12 @@ public class Cadeteria{
         return pedidoBuscado;
     }
 
+    public void AgregarPedido(Pedido pedido){
+        ListaPedidos.Add(pedido);
+    }
+
+    public float JornalACobrar(int idCadete){
+        return (float)ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete).Count() * 500;
+    }
+
 }

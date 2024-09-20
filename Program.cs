@@ -55,7 +55,7 @@ do
 
             System.Console.WriteLine("Ingrese las observaciones del pediodo");
             var obsPedido = Console.ReadLine();
-            PedidosSinAsignar.Add(new Pedido(NroPedido,obsPedido,new Cliente(NombreCliente, DireccionCliente, TelefonoCliente,RefDireccionCliente)));
+            MiCadeteria.AgregarPedido(new Pedido(NroPedido,obsPedido,new Cliente(NombreCliente, DireccionCliente, TelefonoCliente,RefDireccionCliente)));
             break;
         case  2://asignarpedidoCadete
             System.Console.WriteLine("Ingrese el numero del pedido que quiere asignar");
