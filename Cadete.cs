@@ -19,101 +19,15 @@ public class Cadete{
     public int Telefono { get => telefono; set => telefono = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-    public void JornalACobrar(){
-        int cantEntregados = CantidadEntregados();
-        float jornal = cantEntregados * 500;
-        System.Console.WriteLine($"El jornal de el cadete {Nombre} es {jornal} y entrego {cantEntregados}");
-    }
+    
 
     public string InfoCadete(){
         return
             "Id: " + Id +
             "Nombre: " + Nombre +
             "Direccion: " + Direccion +
-            "telefono: " + Telefono +
-            "cantidad de Pedidos pendientes: " + ListaPedidos.Count() +
-            "Cantidad de pedidos entregados: " + CantidadEntregados()
+            "telefono: " + Telefono ;
         ;
-    }
-
-    public void EntregarPedido(int id){
-        foreach (var pedido in ListaPedidos)
-        {
-            if(pedido.NroPedido == id){
-                pedido.Estado = "Entregado";
-                break;
-            }
-        }
-    }
-
-    public int CantidadEntregados(){
-        int i=0;
-        foreach (var pedido in ListaPedidos)
-        {
-            if (pedido.Estado == "Entregado")
-            {
-                i++;
-            }
-        }
-        return i;
-    }
-
-    public void EliminarPedido(int id){
-        foreach (var pedido in ListaPedidos)
-        {
-            if(pedido.NroPedido == id){
-                ListaPedidos.Remove(pedido);
-                break;
-            }
-        }
-    }
-
-    public void AgregarPedido(Pedido pedido){
-        ListaPedidos.Add(pedido);
-    }
-
-    public int CantPedidosPendientes(){
-        int i=0;
-        foreach (var pedido in ListaPedidos)
-        {
-            if (pedido.Estado == "Pendiente")
-            {
-                i++;
-            }
-        }
-        return i;
-    }
-
-    public int CantPedidosTotal(){
-        return ListaPedidos.Count();
-    }
-
-    public void ListarPedidos(){
-        foreach (var pedido in ListaPedidos)
-        {
-            Console.WriteLine(pedido.InfoPedido());
-        }
-    }
-
-    public Pedido BuscarPedidoId(int id){
-        foreach (var pedido in listaPedidos)
-        {
-            if(pedido.NroPedido == id){
-                return pedido;
-            }
-        }
-        return null;
-    }
-
-    public Pedido BuscarPedidoNombre(string nombreCliente){
-        foreach (var pedido in listaPedidos)
-        {
-            if(pedido.Cliente.Nombre == nombreCliente){
-                return pedido;
-
-            }
-        }
-        return null;
     }
 
 }

@@ -178,8 +178,9 @@ float promedioEntregadosPorCadete;
 
 foreach (var cadete in MiCadeteria.ListaCadetes)
 {
-    cadete.JornalACobrar();
-    promedioEntregadosPorCadete = cadete.CantidadEntregados()/cadete.CantPedidosTotal();
-    System.Console.WriteLine($"el promedio de envios entregados por este cadete es {promedioEntregadosPorCadete} ");
+    var idCadete = cadete.Id;
+    var cobra = MiCadeteria.JornalACobrar(idCadete);
+    promedioEntregadosPorCadete = MiCadeteria.CantidadEntregadosCadete(idCadete)/MiCadeteria.CantPedidosTotalCadete(idCadete);
+    System.Console.WriteLine($"el promedio de envios entregados por este cadete es {promedioEntregadosPorCadete} y debe cobrar {cobra}");
 }
 

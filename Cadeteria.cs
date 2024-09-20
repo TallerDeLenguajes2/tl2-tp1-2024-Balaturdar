@@ -28,23 +28,13 @@ public class Cadeteria{
     }
 
     public void ListarCadetes(){
-        
+
         foreach (var cadete in listaCadetes)
         {
             Console.WriteLine(cadete.InfoCadete());
         }
     }
 
-    public void AsignarPedido(int IdCadete, Pedido pedido){
-        Cadete cadete = BuscarCadeteId(IdCadete);
-        if (cadete == null)
-        {
-            System.Console.WriteLine("No se encontro el Cadete");
-            return;
-        }
-        cadete.AgregarPedido(pedido);
-
-    }
 
     public void AsignarPedido(int IdCadete, int idPedido){
         Cadete cadete = BuscarCadeteId(IdCadete);
@@ -151,6 +141,23 @@ public class Cadeteria{
         {
             pedidos.InfoPedido();
         }
+    }
+
+    public void EliminarPedido(int idPedido){
+        ListaPedidos.Remove(ListaPedidos.First(pedido => pedido.NroPedido == idPedido));
+
+    }
+
+    public int CantidadEntregadosCadete(int idCadete){
+        return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete  && pedido.Estado == "Entregado").Count();
+    }
+
+    public int CantPedidosPendientesCadete(int idCadete){
+        return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete && pedido.Estado == "Pendiente").Count();
+    }
+
+    public int CantPedidosTotalCadete(int idCadete){
+        return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete).Count();
     }
 
 }
