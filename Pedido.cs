@@ -12,6 +12,14 @@ public class Pedido{
         Estado = "Pendiente";
     }
 
+    public Pedido(int nroPedido, string obs, Cliente cliente, string estado)
+    {
+        this.nroPedido = nroPedido;
+        this.obs = obs;
+        this.cliente = cliente;
+        this.estado = estado;
+    }
+
     public int NroPedido { get => nroPedido; set => nroPedido = value; }
     public string Obs { get => obs; set => obs = value; }
     public Cliente Cliente { get => cliente; set => cliente = value; }

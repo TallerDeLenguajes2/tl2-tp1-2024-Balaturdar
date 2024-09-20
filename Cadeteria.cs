@@ -1,9 +1,9 @@
-using System.Security.Cryptography.X509Certificates;
 
 public class Cadeteria{
     private string nombre;
     private int telefono;
     private List<Cadete> listaDeCadetes;
+
 
     public Cadeteria(string nombre, int telefono)
     {
