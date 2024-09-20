@@ -6,7 +6,7 @@ int NroPedido = 0;
 
 Cadeteria MiCadeteria = new Cadeteria("La Cadeteria",1234567890);
 
-List<Pedido> PedidosSinAsignar = new List<Pedido>();
+//List<Pedido> PedidosSinAsignar = new List<Pedido>();
 do
 {
     Console.WriteLine(@"
@@ -62,26 +62,14 @@ do
             int NroPedidoAsignar;
             do
             {
-                System.Console.WriteLine("Ingrese una opcion:");
+                System.Console.WriteLine("Ingrese el numero de pedido");
                 aux = int.TryParse(Console.ReadLine(), out NroPedidoAsignar);
                 if (!aux)
                 {
                     System.Console.WriteLine("Debe ingresar un numero");
                 }
             } while(!aux);
-            Pedido PedidoAAsignar= null;
-            foreach (var pedido in PedidosSinAsignar)
-            {
-                if(pedido.NroPedido == NroPedidoAsignar){
-                    PedidoAAsignar = pedido;
-                    break;
-                }
-            }
-            if (PedidoAAsignar == null)
-            {
-                System.Console.WriteLine("no se encontro ningun pedido con ese numero de pedido");
-                break;
-            }
+            
             System.Console.WriteLine("Ingrese el ID del cadete");
             int IdCadeteAsignar;
             do
@@ -93,8 +81,7 @@ do
                     System.Console.WriteLine("Debe ingresar un numero");
                 }
             } while(!aux);
-            MiCadeteria.AsignarPedido(IdCadeteAsignar, PedidoAAsignar);
-            PedidosSinAsignar.Remove(PedidoAAsignar);
+            MiCadeteria.AsignarPedido(IdCadeteAsignar, NroPedidoAsignar);
             break;
         case  3://cambiar estado pedido
             
@@ -165,13 +152,15 @@ do
                     System.Console.WriteLine("Debe ingresar un numero");
                 }
             } while(!aux);
+
             cadete = MiCadeteria.BuscarCadeteId(idCadete);
             if (cadete == null)
             {
                 System.Console.WriteLine("no se encontro ningun cadete con ese ID");;
                 break;
             }
-            cadete.ListarPedidos();
+
+            MiCadeteria.ListarPedidosCadete(idCadete);
             break;
         case  6://ListarCadetes
             MiCadeteria.ListarCadetes();
@@ -187,7 +176,7 @@ do
 
 float promedioEntregadosPorCadete;
 
-foreach (var cadete in MiCadeteria.ListaDeCadetes)
+foreach (var cadete in MiCadeteria.ListaCadetes)
 {
     cadete.JornalACobrar();
     promedioEntregadosPorCadete = cadete.CantidadEntregados()/cadete.CantPedidosTotal();
