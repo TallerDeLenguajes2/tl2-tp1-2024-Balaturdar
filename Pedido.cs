@@ -27,4 +27,8 @@ public class Pedido{
             "Estado: " + Estado;
     }
 
+    public void Entregar(){
+        Estado = "Entregado";
+    }
+
 }

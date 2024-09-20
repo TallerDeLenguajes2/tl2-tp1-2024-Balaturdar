@@ -28,34 +28,34 @@ public class Cadeteria{
     public void ListarCadetes(){
         foreach (var cadete in listaDeCadetes)
         {
-            Console.WriteLine(cadete.infoCadete());
+            Console.WriteLine(cadete.InfoCadete());
         }
     }
 
     public void AsignarPedido(int IdCadete, Pedido pedido){
-        foreach (var cadete in ListaDeCadetes)
+        Cadete cadeteAsignar = BuscarCadeteId(IdCadete);
+        if (cadeteAsignar == null)
         {
-            if (cadete.Id == IdCadete)
-            {
-                cadete.AgregarPedido(pedido);
-                break;
-            }
+            System.Console.WriteLine("No se encontro el Cadete");
+            return;
         }
+        cadeteAsignar.AgregarPedido(pedido);
+
     }
 
     public void ReasignarPedido(int idPedido, int idCadete1, int idCadete2){
         
-        Cadete cadete1=BuscarCadete(idCadete1);
+        Cadete cadete1=BuscarCadeteId(idCadete1);
         if(cadete1==null){
             Console.WriteLine($"no se encontro el cadete con id {idCadete1}");
             return;
         }
-        Cadete cadete2=BuscarCadete(idCadete2);
+        Cadete cadete2=BuscarCadeteId(idCadete2);
         if(cadete2==null){
             Console.WriteLine($"no se encontro el cadete con id {idCadete2}");
             return;
         }
-        Pedido pedido=cadete1.BuscarPedido(idPedido);
+        Pedido pedido=cadete1.BuscarPedidoId(idPedido);
         if(pedido == null){
             Console.WriteLine("El Cadete no tiene el pedido buscado");
             return;
@@ -66,7 +66,7 @@ public class Cadeteria{
 
     }
 
-    public Cadete BuscarCadete(int id){
+    public Cadete BuscarCadeteId(int id){
         foreach (var cadete in listaDeCadetes)
         {
             if(cadete.Id == id){
@@ -76,4 +76,22 @@ public class Cadeteria{
         return null;
     }
     
+    public Pedido BuscarPedidoId(int nroPedido){
+        Pedido pedidoBuscado = null;;
+        foreach (var cadete in listaDeCadetes)
+        {
+            pedidoBuscado = cadete.BuscarPedidoId(nroPedido);
+        }
+        return pedidoBuscado;
+    }
+
+    public Pedido BuscarPedidoNombre(string nombreCliente){
+        Pedido pedidoBuscado = null;;
+        foreach (var cadete in listaDeCadetes)
+        {
+            pedidoBuscado = cadete.BuscarPedidoNombre(nombreCliente);
+        }
+        return pedidoBuscado;
+    }
+
 }

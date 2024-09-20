@@ -25,7 +25,7 @@ public class Cadete{
         System.Console.WriteLine($"El jornal de el cadete {Nombre} es {jornal} y entrego {cantEntregados}");
     }
 
-    public string infoCadete(){
+    public string InfoCadete(){
         return
             "Id: " + Id +
             "Nombre: " + Nombre +
@@ -88,18 +88,29 @@ public class Cadete{
         return ListaPedidos.Count();
     }
 
-    public void listarPedidos(){
+    public void ListarPedidos(){
         foreach (var pedido in ListaPedidos)
         {
             Console.WriteLine(pedido.InfoPedido());
         }
     }
 
-    public Pedido BuscarPedido(int id){
+    public Pedido BuscarPedidoId(int id){
         foreach (var pedido in listaPedidos)
         {
             if(pedido.NroPedido == id){
                 return pedido;
+            }
+        }
+        return null;
+    }
+
+    public Pedido BuscarPedidoNombre(string nombreCliente){
+        foreach (var pedido in listaPedidos)
+        {
+            if(pedido.Cliente.Nombre == nombreCliente){
+                return pedido;
+
             }
         }
         return null;
