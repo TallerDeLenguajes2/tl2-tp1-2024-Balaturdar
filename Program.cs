@@ -189,19 +189,8 @@ float promedioEntregadosPorCadete;
 
 foreach (var cadete in MiCadeteria.ListaDeCadetes)
 {
- 
+    cadete.JornalACobrar();
     promedioEntregadosPorCadete = cadete.CantidadEntregados()/cadete.CantPedidosTotal();
-    System.Console.WriteLine($"el promedio de envios entregados por este cadete ese {promedioEntregadosPorCadete}");
-
-
+    System.Console.WriteLine($"el promedio de envios entregados por este cadete es {promedioEntregadosPorCadete} ");
 }
-
-
-//cantidad de envios promedio entregados/enviostodoales
-//CantidadEntregados
-/*
-Mostrar un informe de pedidos al finalizar la jornada que incluya el monto ganado
-y la cantidad de envíos de cada cadete y el total. Muestre también la cantidad de
-envíos promedio por cadete.
-*/
 
