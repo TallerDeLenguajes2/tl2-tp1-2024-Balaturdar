@@ -51,7 +51,7 @@ public class Pedido{
     public void Entregar(){
         Estado = "Entregado";
     }
-    public void asignarpedidoCadete(Cadete cadete){
+    public void AsignarCadete (Cadete cadete){
         Cadete = cadete;
     }
 

@@ -3,6 +3,7 @@ public class Cadeteria{
     private string nombre;
     private int telefono;
     private List<Cadete> listaDeCadetes;
+    private List<Pedido> listaPedidos;
 
 
     public Cadeteria(string nombre, int telefono)
@@ -20,6 +21,7 @@ public class Cadeteria{
     public string Nombre { get => nombre; set => nombre = value; }
     public int Telefono { get => telefono; set => telefono = value; }
     public List<Cadete> ListaDeCadetes { get => listaDeCadetes; set => listaDeCadetes = value; }
+    public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
     public void AgregarCadete(Cadete cadete){
         ListaDeCadetes.Add(cadete);
@@ -33,13 +35,36 @@ public class Cadeteria{
     }
 
     public void AsignarPedido(int IdCadete, Pedido pedido){
-        Cadete cadeteAsignar = BuscarCadeteId(IdCadete);
-        if (cadeteAsignar == null)
+        Cadete cadete = BuscarCadeteId(IdCadete);
+        if (cadete == null)
         {
             System.Console.WriteLine("No se encontro el Cadete");
             return;
         }
-        cadeteAsignar.AgregarPedido(pedido);
+        cadete.AgregarPedido(pedido);
+
+    }
+
+    public void AsignarPedido(int IdCadete, int idPedido){
+        Cadete cadete = BuscarCadeteId(IdCadete);
+        if (cadete == null)
+        {
+            System.Console.WriteLine("no se encontro el cadete");
+            return;
+        }
+        Pedido pedido = BuscarPedidoId(idPedido);
+        if (pedido == null)
+        {
+            System.Console.WriteLine("no se encontro el pedido");
+            return;
+        }
+
+        if (pedido.Cadete != null)
+        {
+            System.Console.WriteLine("este pedido ya esta asignado");
+            return;
+        }
+        pedido.AsignarCadete(cadete);
 
     }
 
@@ -50,19 +75,21 @@ public class Cadeteria{
             Console.WriteLine($"no se encontro el cadete con id {idCadete1}");
             return;
         }
+
         Cadete cadete2=BuscarCadeteId(idCadete2);
         if(cadete2==null){
             Console.WriteLine($"no se encontro el cadete con id {idCadete2}");
             return;
         }
-        Pedido pedido=cadete1.BuscarPedidoId(idPedido);
+
+        Pedido pedido=BuscarPedidoId(idPedido);
+        
         if(pedido == null){
             Console.WriteLine("El Cadete no tiene el pedido buscado");
             return;
         }
         
-        cadete1.EliminarPedido(idPedido);
-        cadete2.AgregarPedido(pedido);
+        pedido.AsignarCadete(cadete2);
 
     }
 
@@ -77,16 +104,20 @@ public class Cadeteria{
     }
     
     public Pedido BuscarPedidoId(int nroPedido){
-        Pedido pedidoBuscado = null;;
-        foreach (var cadete in listaDeCadetes)
+
+        foreach (var pedido in ListaPedidos)
         {
-            pedidoBuscado = cadete.BuscarPedidoId(nroPedido);
+            if (pedido.NroPedido == nroPedido)
+            {
+                return pedido;
+            }
         }
-        return pedidoBuscado;
+
+        return null;
     }
 
     public Pedido BuscarPedidoNombre(string nombreCliente){
-        Pedido pedidoBuscado = null;;
+        Pedido pedidoBuscado = null;
         foreach (var cadete in listaDeCadetes)
         {
             pedidoBuscado = cadete.BuscarPedidoNombre(nombreCliente);
