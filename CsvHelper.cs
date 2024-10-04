@@ -39,7 +39,7 @@ public class CsvHelper{
             telefono = int.Parse(i[1]);
         }
         
-        return new Cadeteria(nombre, telefono);
+        return new Cadeteria(nombre, telefono, ConvertirCadete(LeerArchivo(Path.GetFullPath(@"../tl2-tp1-2024-Balaturdar/Csv/Cadetes.csv"))));
     }
 
     public static List<Cadete> ConvertirCadete(List<string[]> Filas)

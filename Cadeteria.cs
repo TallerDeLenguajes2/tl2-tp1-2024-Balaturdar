@@ -1,10 +1,10 @@
 
-public class Cadeteria{
+public class Cadeteria
+{
     private string nombre;
     private int telefono;
     private List<Cadete> listaCadetes;
     private List<Pedido> listaPedidos;
-
 
     public Cadeteria(string nombre, int telefono)
     {
@@ -23,11 +23,13 @@ public class Cadeteria{
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-    public void AgregarCadete(Cadete cadete){
+    public void AgregarCadete(Cadete cadete)
+    {
         ListaCadetes.Add(cadete);
     }
 
-    public void ListarCadetes(){
+    public void ListarCadetes()
+    {
 
         foreach (var cadete in listaCadetes)
         {
@@ -35,8 +37,8 @@ public class Cadeteria{
         }
     }
 
-
-    public void AsignarPedido(int IdCadete, int idPedido){
+    public void AsignarPedido(int IdCadete, int idPedido)
+    {
         Cadete cadete = BuscarCadeteId(IdCadete);
         if (cadete == null)
         {
@@ -59,83 +61,53 @@ public class Cadeteria{
 
     }
 
-    public void ReasignarPedido(int idPedido, int idCadete1, int idCadete2){
-        
-        Cadete cadete1=BuscarCadeteId(idCadete1);
-        if(cadete1==null){
+    public void ReasignarPedido(int idPedido, int idCadete1)
+    {
+
+        Cadete cadete1 = BuscarCadeteId(idCadete1);
+        if (cadete1 == null)
+        {
             Console.WriteLine($"no se encontro el cadete con id {idCadete1}");
             return;
         }
 
-        Cadete cadete2=BuscarCadeteId(idCadete2);
-        if(cadete2==null){
-            Console.WriteLine($"no se encontro el cadete con id {idCadete2}");
-            return;
-        }
-
-        Pedido pedido=BuscarPedidoId(idPedido);
-        
-        if(pedido == null){
+        Pedido pedido = BuscarPedidoId(idPedido);
+        if (pedido == null)
+        {
             Console.WriteLine("El Cadete no tiene el pedido buscado");
             return;
         }
-        
-        pedido.AsignarCadete(cadete2);
 
+        pedido.AsignarCadete(cadete1);
     }
 
-    public Cadete BuscarCadeteId(int id){
-
+    public Cadete BuscarCadeteId(int id)
+    {
         return ListaCadetes.First(cadete => cadete.Id == id);
-        /*
-        foreach (var cadete in listaCadetes)
-        {
-            if(cadete.Id == id){
-                return cadete;
-            }
-        }
-        return null;*/
     }
-    
-    public Pedido BuscarPedidoId(int nroPedido){
 
+    public Pedido BuscarPedidoId(int nroPedido)
+    {
         return ListaPedidos.First(pedido => pedido.NroPedido == nroPedido);
-
-/*
-        foreach (var pedido in ListaPedidos)
-        {
-            if (pedido.NroPedido == nroPedido)
-            {
-                return pedido;
-            }
-        }
-
-        return null;
-        */
     }
 
-    public Pedido BuscarPedidoNombre(string nombreCliente){
-
+    public Pedido BuscarPedidoNombre(string nombreCliente)
+    {
         return ListaPedidos.First(pedido => pedido.Cliente.Nombre == nombreCliente);
-        
-        /*
-        Pedido pedidoBuscado = null;
-        foreach (var cadete in listaDeCadetes)
-        {
-            pedidoBuscado = cadete.BuscarPedidoNombre(nombreCliente);
-        }
-        return pedidoBuscado;*/
     }
 
-    public void AgregarPedido(Pedido pedido){
+    public void AgregarPedido(Pedido pedido)
+    {
         ListaPedidos.Add(pedido);
     }
 
-    public float JornalACobrar(int idCadete){
+    public float JornalACobrar(int idCadete)
+    {
         return (float)ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete).Count() * 500;
     }
 
-    public void ListarPedidosCadete(int idCadete){
+    public void ListarPedidosCadete(int idCadete)
+    {
         var pedidosCadete = ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete);
         foreach (var pedidos in pedidosCadete)
         {
@@ -143,21 +115,37 @@ public class Cadeteria{
         }
     }
 
-    public void EliminarPedido(int idPedido){
+    public void EliminarPedido(int idPedido)
+    {
         ListaPedidos.Remove(ListaPedidos.First(pedido => pedido.NroPedido == idPedido));
-
     }
 
-    public int CantidadEntregadosCadete(int idCadete){
-        return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete  && pedido.Estado == "Entregado").Count();
+    public int CantEntregadosCadete(int idCadete)
+    {
+        return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete && pedido.Estado == "Entregado").Count();
     }
 
-    public int CantPedidosPendientesCadete(int idCadete){
+    public int CantPedidosPendientesCadete(int idCadete)
+    {
         return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete && pedido.Estado == "Pendiente").Count();
     }
 
-    public int CantPedidosTotalCadete(int idCadete){
+    public int CantPedidosTotalCadete(int idCadete)
+    {
         return ListaPedidos.Where(pedido => pedido.Cadete.Id == idCadete).Count();
+    }
+
+    public void promedio()
+    {
+        float promedioEntregadosPorCadete;
+
+        foreach (var cadete in ListaCadetes)
+        {
+            var idCadete = cadete.Id;
+            var cobra = JornalACobrar(idCadete);
+            promedioEntregadosPorCadete = CantEntregadosCadete(idCadete) / CantPedidosTotalCadete(idCadete);
+            System.Console.WriteLine($"el promedio de envios entregados por este cadete es {promedioEntregadosPorCadete} y debe cobrar {cobra}");
+        }
     }
 
 }
