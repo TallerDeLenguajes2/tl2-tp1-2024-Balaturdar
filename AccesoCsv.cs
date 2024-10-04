@@ -1,4 +1,4 @@
-public class CsvHelper{
+public class AccesoCsv : AccesoADatos{
 
     public static List<string[]> LeerArchivo(string nombreArchivo)
     {
@@ -29,8 +29,10 @@ public class CsvHelper{
         }
     }
 
-    public static Cadeteria ConvertirCadeteria(List<string[]> Fila)
+    public override Cadeteria ConvertirCadeteria(string rutaArchivo)
     {
+
+        var Fila = LeerArchivo(rutaArchivo);
         string nombre = null;
         int telefono = 0;
         foreach (string[] i in Fila)
@@ -39,11 +41,13 @@ public class CsvHelper{
             telefono = int.Parse(i[1]);
         }
         
-        return new Cadeteria(nombre, telefono, ConvertirCadete(LeerArchivo(Path.GetFullPath(@"../tl2-tp1-2024-Balaturdar/Csv/Cadetes.csv"))));
+        //return new Cadeteria(nombre, telefono, ConvertirCadete(LeerArchivo(Path.GetFullPath(@"../tl2-tp1-2024-Balaturdar/Csv/Cadetes.csv"))));
+        return new Cadeteria(nombre, telefono, ConvertirCadete(Path.GetFullPath(@"../tl2-tp1-2024-Balaturdar/Csv/Cadetes.csv")));
     }
 
-    public static List<Cadete> ConvertirCadete(List<string[]> Filas)
+    public override List<Cadete> ConvertirCadete(string rutaArchivo)
     {
+        var Filas = LeerArchivo(rutaArchivo);
         List<Cadete> misCadetes = new List<Cadete>();
         foreach (string[] fila in Filas)
         {

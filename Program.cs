@@ -1,7 +1,23 @@
-﻿int opc;
-bool aux;
+﻿
+
+int opc;
 int NroPedido = 0;
-Cadeteria MiCadeteria = CsvHelper.ConvertirCadeteria(CsvHelper.LeerArchivo(Path.GetFullPath(@"../tl2-tp1-2024-Balaturdar/Csv/Cadeteria.csv")));
+
+AccesoADatos accesoDatos;
+Cadeteria MiCadeteria;
+
+string tipoArchivo = getExtensionArchivo();
+if (tipoArchivo == ".csv")
+{
+    accesoDatos = new AccesoCsv();
+    MiCadeteria = accesoDatos.ConvertirCadeteria(Path.GetFullPath(@$"../tl2-tp1-2024-Balaturdar/Csv/Cadeteria{tipoArchivo}"));
+}
+else
+{
+    accesoDatos = new AccesoJson();
+    MiCadeteria = accesoDatos.ConvertirCadeteria(Path.GetFullPath(@$"../tl2-tp1-2024-Balaturdar/Json/Cadeteria{tipoArchivo}"));
+}
+
 
 do
 {
@@ -13,17 +29,9 @@ do
             //crear cliente
             System.Console.WriteLine("ingrese el nombre del cliente");
             var NombreCliente = Console.ReadLine();
-            System.Console.WriteLine("ingrese el telefono del cliente");
-            int TelefonoCliente;
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out TelefonoCliente);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
+
+            int TelefonoCliente = MenuInterfaz.Validar("ingrese el telefono del cliente", "Debe ingresar un numero");
+
             System.Console.WriteLine("ingrese la direccion del cliente");
             var DireccionCliente = Console.ReadLine();
             System.Console.WriteLine("ingrese la referencia de cliente");
@@ -35,44 +43,13 @@ do
             break;
 
         case 2://asignarpedidoCadete
-            System.Console.WriteLine("Ingrese el numero del pedido que quiere asignar");
-            int NroPedidoAsignar;
-            do
-            {
-                System.Console.WriteLine("Ingrese el numero de pedido");
-                aux = int.TryParse(Console.ReadLine(), out NroPedidoAsignar);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
-
-            System.Console.WriteLine("Ingrese el ID del cadete");
-            int IdCadeteAsignar;
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out IdCadeteAsignar);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
+            int NroPedidoAsignar = MenuInterfaz.Validar("Ingrese el numero del pedido que quiere asignar", "Debe ingresar un numero");
+            int IdCadeteAsignar = MenuInterfaz.Validar("Ingrese el ID del cadete", "Debe ingresar un numero");
             MiCadeteria.AsignarPedido(IdCadeteAsignar, NroPedidoAsignar);
             break;
 
         case 3://cambiar estado pedido
-
-            System.Console.WriteLine("ingrese el Nro del pedido");
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out NroPedido);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
+            NroPedido = MenuInterfaz.Validar("ingrese el Nro del pedido", "Debe ingresar un numero");
             Pedido PedidoEstado = MiCadeteria.BuscarPedidoId(NroPedido);
             if (PedidoEstado == null)
             {
@@ -80,60 +57,18 @@ do
                 break;
             }
             PedidoEstado.Entregar();
-
             break;
 
         case 4://reasignarPedido
-            int idCadete1, idCadete2;
-            System.Console.WriteLine("ingrese el ID del cadete que tiene el pedido");
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out idCadete1);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
-            System.Console.WriteLine("ingrese el Id del cadete que al que va a asignar el pedido");
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out idCadete2);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
-            System.Console.WriteLine("ingrese el nro de pedido");
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out NroPedido);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
-
-            MiCadeteria.ReasignarPedido(NroPedido, idCadete1, idCadete2);
+            int idCadete1;
+            idCadete1 = MenuInterfaz.Validar("ingrese el ID del cadete al que va a asignar el pedido", "Debe ingresar un numero");
+            NroPedido = MenuInterfaz.Validar("ingrese el nro de pedido", "Debe ingresar un numero");
+            MiCadeteria.ReasignarPedido(NroPedido, idCadete1);
             break;
 
         case 5://listarpedidoCadete
-            int idCadete;
-            Cadete cadete;
-            System.Console.WriteLine("ingrese el id del cadete");
-            do
-            {
-                System.Console.WriteLine("Ingrese una opcion:");
-                aux = int.TryParse(Console.ReadLine(), out idCadete);
-                if (!aux)
-                {
-                    System.Console.WriteLine("Debe ingresar un numero");
-                }
-            } while (!aux);
-
-            cadete = MiCadeteria.BuscarCadeteId(idCadete);
+            int idCadete = MenuInterfaz.Validar("ingrese el id del cadete", "Debe ingresar un numero");
+            Cadete cadete = MiCadeteria.BuscarCadeteId(idCadete);
             if (cadete == null)
             {
                 System.Console.WriteLine("no se encontro ningun cadete con ese ID"); ;
@@ -149,9 +84,39 @@ do
             break;
     }
 
-
-
 } while (opc != 7);
 
 
 MiCadeteria.promedio();
+
+
+string getExtensionArchivo()
+{
+    int opcionArchivo;
+            string extension;
+
+            Console.WriteLine(@"
+            *************************************************
+            **Seleccione con qué tipo de archivos trabajará**
+            **1. JSON                                      **
+            **2. CSV                                       **
+            *************************************************
+            ");
+            
+
+            while (!int.TryParse(Console.ReadLine(), out opcionArchivo) || (opcionArchivo != 1 && opcionArchivo != 2))
+            {
+                Console.WriteLine("Por favor, introduce un número válido.\n");
+            }
+
+            if (opcionArchivo == 1)
+            {
+                extension = ".json";
+            }
+            else
+            {
+                extension = ".csv";
+            }
+
+            return extension;
+}
