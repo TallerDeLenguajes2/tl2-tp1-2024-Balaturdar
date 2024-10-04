@@ -23,8 +23,12 @@ public class Cadeteria
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-    public void AgregarCadete(Cadete cadete)
+    public void AgregarCadete(int id, string nombre, string direccion, int telefono)
     {
+        ListaCadetes.Add(new Cadete( id, nombre, direccion, telefono));
+    }
+
+    public void AgregarCadete(Cadete cadete){
         ListaCadetes.Add(cadete);
     }
 
@@ -96,9 +100,9 @@ public class Cadeteria
         return ListaPedidos.First(pedido => pedido.Cliente.Nombre == nombreCliente);
     }
 
-    public void AgregarPedido(Pedido pedido)
+    public void AgregarPedido(int nroPedido, string obs, string nombre, string direccion, int telefono, string refDireccion)
     {
-        ListaPedidos.Add(pedido);
+        ListaPedidos.Add(new Pedido( nroPedido, obs, new Cliente(nombre, direccion, telefono, refDireccion)));
     }
 
     public float JornalACobrar(int idCadete)

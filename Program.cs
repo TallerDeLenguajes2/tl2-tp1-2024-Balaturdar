@@ -39,7 +39,7 @@ do
 
             System.Console.WriteLine("Ingrese las observaciones del pediodo");
             var obsPedido = Console.ReadLine();
-            MiCadeteria.AgregarPedido(new Pedido(NroPedido, obsPedido, new Cliente(NombreCliente, DireccionCliente, TelefonoCliente, RefDireccionCliente)));
+            MiCadeteria.AgregarPedido(NroPedido, obsPedido, NombreCliente, DireccionCliente, TelefonoCliente, RefDireccionCliente);
             break;
 
         case 2://asignarpedidoCadete
